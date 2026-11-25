@@ -1,0 +1,38 @@
+# Dependências do Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Variáveis de ambiente e segredos (nunca suba senhas ou strings de conexão)
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# Volumes ou dados locais do PostgreSQL / Docker (se mapeados localmente)
+pgdata/
+postgres-data/
+data/
+*.sql.gz
+
+# Logs e arquivos temporários
+logs/
+*.log
+tmp/
+temp/
+
+# Configurações locais de IDEs e editores
+.vscode/
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+
+# Arquivos de sistema operacional (Windows e Linux)
+Thumbs.db
+Desktop.ini
+.DS_Store
+*~

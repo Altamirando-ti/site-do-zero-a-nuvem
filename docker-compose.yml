@@ -1,0 +1,42 @@
+#version: '3.8'
+
+services:
+  # Serviço 1: O Banco de Dados PostgreSQL
+  db:
+    image: postgres:15-alpine
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-minhasenhasecreta}
+      POSTGRES_DB: ${DB_NAME:-projetonuvem}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - rede-projeto
+
+  # Serviço 2: O nosso Backend Node.js
+  backend:
+    build: ./backend
+    container_name: node_backend
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - DB_USER=${DB_USER:-postgres}
+      - DB_HOST=db  # Nome do serviço do banco acima! O Docker resolve isso automaticamente
+      - DB_NAME=${DB_NAME:-projetonuvem}
+      - DB_PASSWORD=${DB_PASSWORD:-minhasenhasecreta}
+      - DB_PORT=5432
+    depends_on:
+      - db
+    networks:
+      - rede-projeto
+
+volumes:
+  pgdata:
+
+networks:
+  rede-projeto:
+    driver: bridge
